@@ -1,0 +1,77 @@
+services:
+  gluetun:
+    image: qmcgaw/gluetun:latest
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      - VPN_SERVICE_PROVIDER=nordvpn
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=changeme
+      - SERVER_COUNTRIES=France
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    network_mode: "container:gluetun"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+      - WEBUI_PORT=8080
+    volumes:
+      - /home/user/path/to/qbittorrent/config:/config
+      - /mnt/stockage:/data # Racine pour Hardlinks
+    restart: unless-stopped
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+    volumes:
+      - /home/path/to/apps_data/prowlarr/config:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+
+  flaresolverr:
+    image: flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - LOG_LEVEL=info
+      - TZ=Europe/Paris
+    ports:
+      - 8191:8191
+    restart: unless-stopped
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+    volumes:
+      - /home/user/path/to/radarr/config:/config
+      - /mnt/stockage:/data # Racine pour Hardlinks
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+
+  radarr-cleaner:
+    image: python:3.9-slim
+    container_name: radarr-cleaner
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - /home/user/seedbox/cleaner.py:/app/cleaner.py
+    command: sh -c "pip install requests && python /app/cleaner.py"
+    restart: unless-stopped
