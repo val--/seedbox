@@ -12,6 +12,7 @@ Docker Compose stack for a self-hosted seedbox behind a VPN, featuring automated
 | **FlareSolverr** | Cloudflare bypass proxy for Prowlarr | `:8191` |
 | **Radarr** | Movie collection manager | `:7878` |
 | **Sonarr** | TV Series collection manager | `:8989` |
+| **Bazarr** | Subtitle manager for Radarr & Sonarr | `:6767` |
 | **Radarr Cleaner** | Python script to auto-remove stalled/warning downloads | - |
 
 ---
@@ -40,7 +41,7 @@ Edit `.env` with these essential values:
 ```sh
 # Ensure the stack can write to your storage
 sudo chown -R $USER:$USER /mnt/stockage
-mkdir -p $APPS_DATA_PATH/{qbittorrent,prowlarr,radarr,sonarr}/config
+mkdir -p $APPS_DATA_PATH/{qbittorrent,prowlarr,radarr,sonarr,bazarr}/config
 ```
 
 ### 3. Start the stack
