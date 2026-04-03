@@ -123,6 +123,31 @@ docker image prune -f
 
 ---
 
+## Troubleshooting
+
+### NAS folder not writable by Radarr/Sonarr
+
+**Symptom:** Adding a NAS path as a Root Folder in Radarr/Sonarr fails with `Folder '/nas_films/' is not writable by user 'abc'`.
+
+**Cause:** The NFS share is mounted as read-only, or the NFS squash settings don't grant write access to the container's user (UID 1000).
+
+**Fix (Synology NAS):**
+
+1. On the Synology, go to **Control Panel > Shared Folder**
+2. Select the shared folder (e.g. `video`) > **Edit > NFS Permissions**
+3. Edit the rule for your network (e.g. `192.168.1.0/24`) and set:
+   - **Privilege**: Read/Write
+   - **Squash**: Map all users to admin
+4. Save, then remount and restart on your server:
+
+```sh
+sudo umount /mnt/synology/video
+sudo mount -a
+docker compose restart radarr
+```
+
+---
+
 ## Pro tips
 
 - **Original titles**: In Radarr > Settings > Media Management, check *Use Movie Origin Title* to keep French titles.
