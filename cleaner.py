@@ -2,9 +2,9 @@ import requests
 import time
 import os
 
-RADARR_URL = "http://localhost:7878"
-API_KEY = "b57....changewithradarrapikey"
-CHECK_INTERVAL = 300 # 5 minutes
+RADARR_URL = os.environ["RADARR_URL"]
+API_KEY = os.environ["RADARR_API_KEY"]
+CHECK_INTERVAL = int(os.environ.get("CHECK_INTERVAL", "300"))
 
 def check_and_clean():
     try:
@@ -19,9 +19,13 @@ def check_and_clean():
         for item in records:
             title = item.get('title')
             item_id = item.get('id')
+            
+            # On récupère les statuts et on les passe en minuscule pour comparer
             status = str(item.get('status', '')).lower()
             tracked_status = str(item.get('trackedDownloadStatus', '')).lower()
-                        print(f"➡️ Analysé : {title} | Status: {status} | Tracked: {tracked_status}")
+            
+            # LOG DEBUG : Affiche ce que le script voit
+            print(f"➡️ Analysé : {title} | Status: {status} | Tracked: {tracked_status}")
             
             # CONDITION DE SUPPRESSION :
             # Si le mot 'warning' ou 'stalled' apparaît dans l'un des deux champs
