@@ -148,6 +148,22 @@ docker compose restart radarr
 
 ---
 
+## Organize NAS library
+
+If your NAS has loose movie files (not in individual folders), use the included script to organize them:
+
+```sh
+# Preview what will be moved (dry-run, no changes made)
+./organize.sh /mnt/synology/video/Films
+
+# Apply for real
+./organize.sh /mnt/synology/video/Films --apply
+```
+
+This moves each video file into its own folder (named after the file) and groups matching subtitle files (`.srt`, `.sub`, etc.) alongside it. This makes the library compatible with Radarr's expected folder-per-movie structure.
+
+---
+
 ## Pro tips
 
 - **Original titles**: In Radarr > Settings > Media Management, check *Use Movie Origin Title* to keep French titles.
