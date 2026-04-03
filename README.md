@@ -154,13 +154,13 @@ If your NAS has loose movie files (not in individual folders), use the included 
 
 ```sh
 # Preview what will be moved (dry-run, no changes made)
-./organize.sh /mnt/synology/video/Films
+python3 organize.py /mnt/synology/video/Films
 
 # Apply for real
-./organize.sh /mnt/synology/video/Films --apply
+python3 organize.py /mnt/synology/video/Films --apply
 ```
 
-This moves each video file into its own folder (named after the file) and groups matching subtitle files (`.srt`, `.sub`, etc.) alongside it. This makes the library compatible with Radarr's expected folder-per-movie structure.
+The script parses movie filenames (dot-separated, space-separated, with or without year in parentheses) and creates clean `Movie Name (Year)` folders. Matching subtitle files (`.srt`, `.sub`, etc.) are moved alongside their video. This makes the library compatible with Radarr's expected folder-per-movie structure.
 
 ---
 
