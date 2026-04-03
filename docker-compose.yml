@@ -69,6 +69,21 @@ services:
       - 7878:7878
     restart: unless-stopped
 
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${APPS_DATA_PATH}/bazarr/config:/config
+      - ${STORAGE_PATH}:/data
+      - ${NAS_VIDEO_PATH}/Films:/nas_films
+    ports:
+      - 6767:6767
+    restart: unless-stopped
+
   radarr-cleaner:
     image: python:3.9-slim
     container_name: radarr-cleaner
