@@ -104,6 +104,25 @@ docker logs radarr-cleaner
 
 ---
 
+## Updating services
+
+Pull the latest images and recreate only the containers that changed:
+
+```sh
+docker compose pull
+docker compose up -d
+```
+
+Your settings are preserved — all config is stored in volumes (`APPS_DATA_PATH`), so new container versions reconnect to existing data automatically.
+
+Optionally, clean up old unused images to free disk space:
+
+```sh
+docker image prune -f
+```
+
+---
+
 ## Pro tips
 
 - **Original titles**: In Radarr > Settings > Media Management, check *Use Movie Origin Title* to keep French titles.
