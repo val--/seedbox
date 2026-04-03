@@ -63,8 +63,8 @@ services:
       - TZ=${TZ}
     volumes:
       - ${APPS_DATA_PATH}/radarr/config:/config
-      - ${STORAGE_PATH}:/data # Racine pour Hardlinks
-      - ${NAS_VIDEO_PATH}/Films:/nas_films:ro
+      - ${STORAGE_PATH}:/data
+      - ${NAS_VIDEO_PATH}/Films:/nas_films
     ports:
       - 7878:7878
     restart: unless-stopped
