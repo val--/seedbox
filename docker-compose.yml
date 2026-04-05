@@ -31,7 +31,7 @@ services:
     volumes:
       - ${APPS_DATA_PATH}/qbittorrent/config:/config
       - ${STORAGE_PATH}:/data
-      - ${NAS_MOVIE_PATH}:/nas_films
+      - ${NAS_MOVIES_PATH}:/nas_films
       - ${NAS_TV_SHOWS_PATH}:/nas_series
     restart: unless-stopped
 
@@ -68,7 +68,7 @@ services:
     volumes:
       - ${APPS_DATA_PATH}/radarr/config:/config
       - ${STORAGE_PATH}:/data
-      - ${NAS_MOVIE_PATH}/Movies:/nas_films
+      - ${NAS_MOVIES_PATH}/Movies:/nas_films
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -98,7 +98,7 @@ services:
     volumes:
       - ${APPS_DATA_PATH}/bazarr/config:/config
       - ${STORAGE_PATH}:/data
-      - ${NAS_MOVIE_PATH}/Movies:/nas_films
+      - ${NAS_MOVIES_PATH}/Movies:/nas_films
       - ${NAS_TV_SHOWS_PATH}/TV_Shows:/nas_series
     ports:
       - 6767:6767
