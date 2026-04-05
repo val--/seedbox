@@ -13,7 +13,7 @@ Docker Compose stack for a self-hosted seedbox behind a VPN, featuring automated
 | **Radarr** | Movie collection manager | `:7878` |
 | **Sonarr** | TV Series collection manager | `:8989` |
 | **Bazarr** | Subtitle manager for Radarr & Sonarr | `:6767` |
-| **Radarr Cleaner** | Python script to auto-remove stalled/warning downloads | - |
+| **Arr Cleaner** | Python script to auto-remove stalled/warning downloads (Radarr + Sonarr) | - |
 
 ---
 
@@ -35,6 +35,7 @@ Edit `.env` with these essential values:
 | `STORAGE_PATH` | Your drive for active seeding (e.g. `/mnt/stockage`) |
 | `NAS_PATH` | Path where your old NAS is mounted (e.g. `/mnt/nas`) |
 | `RADARR_API_KEY` | Radarr > Settings > General |
+| `SONARR_API_KEY` | Sonarr > Settings > General |
 
 ### 2. Permissions & directories
 
@@ -100,7 +101,7 @@ ls -i "/data/Downloads_Temp/Movie.mkv" "/data/Videos/Films/Movie (2025)/Movie.mk
 
 ```sh
 # Check why a torrent was removed
-docker logs radarr-cleaner
+docker logs arr-cleaner
 ```
 
 ---
