@@ -30,7 +30,9 @@ services:
       - WEBUI_PORT=8080
     volumes:
       - ${APPS_DATA_PATH}/qbittorrent/config:/config
-      - ${STORAGE_PATH}:/data # Racine pour Hardlinks
+      - ${STORAGE_PATH}:/data
+      - ${NAS_MOVIE_PATH}:/nas_films
+      - ${NAS_TV_SHOWS_PATH}:/nas_series
     restart: unless-stopped
 
   prowlarr:
@@ -66,7 +68,7 @@ services:
     volumes:
       - ${APPS_DATA_PATH}/radarr/config:/config
       - ${STORAGE_PATH}:/data
-      - ${NAS_MOVIE_PATH}:/nas_films
+      - ${NAS_MOVIE_PATH}/Movies:/nas_films
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -81,7 +83,7 @@ services:
     volumes:
       - ${APPS_DATA_PATH}/sonarr/config:/config
       - ${STORAGE_PATH}:/data
-      - ${NAS_TV_SHOWS_PATH}:/nas_series
+      - ${NAS_TV_SHOWS_PATH}/TV_Shows:/nas_series
     ports:
       - 8989:8989
     restart: unless-stopped
@@ -96,8 +98,8 @@ services:
     volumes:
       - ${APPS_DATA_PATH}/bazarr/config:/config
       - ${STORAGE_PATH}:/data
-      - ${NAS_MOVIE_PATH}:/nas_films
-      - ${NAS_TV_SHOWS_PATH}:/nas_series
+      - ${NAS_MOVIE_PATH}/Movies:/nas_films
+      - ${NAS_TV_SHOWS_PATH}/TV_Shows:/nas_series
     ports:
       - 6767:6767
     restart: unless-stopped
