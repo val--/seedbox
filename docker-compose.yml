@@ -21,6 +21,8 @@ services:
     image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
     network_mode: "container:gluetun"
+    depends_on:
+      - gluetun
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -64,7 +66,7 @@ services:
     volumes:
       - ${APPS_DATA_PATH}/radarr/config:/config
       - ${STORAGE_PATH}:/data
-      - ${NAS_VIDEO_PATH}/Films:/nas_films
+      - ${NAS_MOVIE_PATH}/Films:/nas_films
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -79,7 +81,7 @@ services:
     volumes:
       - ${APPS_DATA_PATH}/sonarr/config:/config
       - ${STORAGE_PATH}:/data
-      - ${NAS_VIDEO_PATH}/Series:/nas_series
+      - ${NAS_TV_SHOWS_PATH}/TV_Shows:/nas_series
     ports:
       - 8989:8989
     restart: unless-stopped
@@ -94,8 +96,8 @@ services:
     volumes:
       - ${APPS_DATA_PATH}/bazarr/config:/config
       - ${STORAGE_PATH}:/data
-      - ${NAS_VIDEO_PATH}/Films:/nas_films
-      - ${NAS_VIDEO_PATH}/Series:/nas_series
+      - ${NAS_MOVIE_PATH}/Films:/nas_films
+      - ${NAS_TV_SHOWS_PATH}/TV_Shows:/nas_series
     ports:
       - 6767:6767
     restart: unless-stopped
@@ -103,6 +105,9 @@ services:
   arr-cleaner:
     image: python:3.9-slim
     container_name: arr-cleaner
+    depends_on:
+      - radarr
+      - sonarr
     environment:
       - PYTHONUNBUFFERED=1
       - RADARR_URL=${RADARR_URL}
