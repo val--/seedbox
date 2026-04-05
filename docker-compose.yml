@@ -98,8 +98,8 @@ services:
     volumes:
       - ${APPS_DATA_PATH}/bazarr/config:/config
       - ${STORAGE_PATH}:/data
-      - ${NAS_MOVIES_PATH}/Movies:/nas_movies
-      - ${NAS_TV_SHOWS_PATH}/TV_Shows:/nas_tv_shows
+      - ${NAS_MOVIES_PATH}:/nas_movies
+      - ${NAS_TV_SHOWS_PATH}:/nas_tv_shows
     ports:
       - 6767:6767
     restart: unless-stopped
