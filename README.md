@@ -60,6 +60,10 @@ docker compose up -d
 - **VPN binding**: In qBittorrent > Options > Advanced:
   - **Network Interface**: Set to `tun0` (critical for kill switch).
   - **Optional IP**: Set to the `172.x.x.x` address.
+- **Port forwarding (needed to seed properly)**: The VPN provider must support port forwarding, otherwise qBittorrent shows `Connection status: Firewalled` (visible in the bottom status bar) and can't accept incoming peer connections. Gluetun natively supports this for ProtonVPN (Plus plan+), Private Internet Access, Perfect Privacy and PrivateVPN — NordVPN does **not** support it.
+  - Set `VPN_PORT_FORWARDING=on` in `.env` (see `.env.example`).
+  - `docker-compose.yml` already runs a `VPN_PORT_FORWARDING_UP_COMMAND` that pushes the forwarded port to qBittorrent automatically whenever gluetun (re)assigns one.
+  - For that command to reach qBittorrent's WebUI without a login, enable **Options > WebUI > "Bypass authentication for clients on localhost"** once in qBittorrent (safe here: qBittorrent shares gluetun's network namespace, so only requests from inside that same container stack count as "localhost").
 
 ---
 
