@@ -37,6 +37,7 @@ services:
       - ${NAS_MOVIES_PATH}:/nas_movies
       - ${NAS_TV_SHOWS_PATH}:/nas_tv_shows
       - ${NAS_TV_SHOWS_2_PATH}:/nas_tv_shows_2
+      - ${NAS_EBOOKS_PATH}:/nas_ebooks
     restart: unless-stopped
 
   prowlarr:
